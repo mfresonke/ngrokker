@@ -2,6 +2,10 @@
 [![GoDoc](https://godoc.org/github.com/mfresonke/ngrokker?status.svg)](https://godoc.org/github.com/mfresonke/ngrokker)
 
 `ngrokker` wraps the `ngrok` shell command, allowing you to programmatically create an introspective tunnel. For more information about ngrok, see https://ngrok.com.
+
+Created for the [send2phone](https://github.com/mfresonke/send2phone) utility.
+
+This package is in alpha state. Contributions are welcome and encouraged!
 ## Prerequisites
 You must have `ngrok` installed and available on your `$PATH`. See https://ngrok.com/download.
 ## Installing
@@ -69,8 +73,7 @@ Thanks, @inconshreveable!
 See https://github.com/mfresonke/ngrokker/issues
 
 ## Contributing
-This package is in alpha state. Contributions are welcome and encouraged!
-Please fork the repo, make your changes, and create a PR.
+Please fork the repo, make your changes, and create a PR. Make sure you `gofmt`, `golint`, and `go vet` your code!
 
 ## Notice
 All users of ngrok MUST accept the [ngrok terms of service](https://ngrok.com/tos) before opening a tunnel.
