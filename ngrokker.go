@@ -1,4 +1,5 @@
-// Package ngrokker allows the programmatic creation of ngrok introspective tunnels
+// Package ngrokker allows the programmatic creation of ngrok introspective tunnels.
+//
 // See example/ngrokkerexample.go for example usage.
 package ngrokker
 

@@ -1,10 +1,10 @@
 package tunneler
 
-// Interface is the main interface that represents a type that can open an introspective
-//  tunnel. The Open method creates and starts the tunnel, and returns the introspective
-//  url, while the Close method closes the tunnel and cleans up all associated resources
+// Interface represents a type that can open an introspective tunnel.
 type Interface interface {
+	// Open creates and starts the tunnel, and returns the introspective urls
 	Open(port int) ([]Endpoint, error)
+	// Close method closes the tunnel and cleans up all associated resources
 	Close() error
 }
 
