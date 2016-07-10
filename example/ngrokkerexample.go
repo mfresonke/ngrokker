@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	// setup introspective tunnel to port 8080
+	// setup an introspective tunnel to port 8080
 	tunnel := ngrokker.NewHTTPTunnel(true, false)
 	endpoints, _ := tunnel.Open(8080)
 	// don't forget to close the tunnel!
