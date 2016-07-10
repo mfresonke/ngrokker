@@ -68,7 +68,8 @@ type tunnel struct {
 
 // NewHTTPTunnel creates a new ngrok http tunnel, ready to open!
 //
-// Users MUST accept the ngrok TOS available at https://ngrok.com/tos.
+// Users MUST accept the TOS available at https://ngrok.com/tos before use.
+//
 // Setting verbose to true prints diagnostic information to stderr.
 func NewHTTPTunnel(acceptedTOS, verbose bool) Tunneler {
 	return &tunnel{
