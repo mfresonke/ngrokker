@@ -8,6 +8,7 @@ This package is `go get`able.
 go get github.com/mfresonke/ngrokker
 ```
 ## Example Usage
+### Code
 ```go
 package main
 
@@ -38,7 +39,7 @@ func main() {
 	// find the secure endpoint out of the two ngrok creates by default
 	var secureEndpoint tunneler.Endpoint
 	for i, endpoint := range endpoints {
-		fmt.Println("Endpoint", i+1, ": ", endpoint.URL)
+		fmt.Println("Endpoint", i+1, "-", endpoint.URL)
 		if endpoint.Secure {
 			secureEndpoint = endpoint
 		}
@@ -46,12 +47,21 @@ func main() {
 
 	// Make a zero-configuration https request to your own machine!
 	// Notice the lack of ":8080"!
-	resp, _ := http.Get(secureEndpoint.URL + "/hello-world")
+	reqURL := secureEndpoint.URL + "/hello-world"
+	fmt.Println("Making request from outside world to ", reqURL)
+	resp, _ := http.Get(reqURL)
 	defer resp.Body.Close()
 	bodyBytes, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println(string(bodyBytes))
 }
 
+```
+### Output
+```
+Endpoint 1 - http://41e32dbc.ngrok.io
+Endpoint 2 - https://41e32dbc.ngrok.io
+Making request from outside world to  https://41e32dbc.ngrok.io/hello-world
+Thanks, @inconshreveable!
 ```
 
 ## Notice
