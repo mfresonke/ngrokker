@@ -11,7 +11,7 @@ const (
 )
 
 var (
-	// ErrExistingTunnel is the error returned if you try to Open a second (or moreth)
+	// ErrExistingTunnel is the error returned if you try to Open a second (or more)
 	//  tunnel. This is because ngrok does not allow (unless you pay) for more
 	//  than one tunnel to run at a time.
 	ErrExistingTunnel = errors.New("Another ngrokker tunnel (perhaps by another package) is already online.")

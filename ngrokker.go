@@ -15,8 +15,6 @@ import (
 	"sync"
 	"syscall"
 	"time"
-
-	"github.com/mfresonke/ngrokker/tunneler"
 )
 
 const (
@@ -47,6 +45,20 @@ var (
 	existingTunnelSyncer = &sync.Mutex{}
 )
 
+// Tunneler represents a type that can open and close an introspective tunnel.
+type Tunneler interface {
+	// Open creates and starts the tunnel, and returns the introspective urls
+	Open(port int) ([]Endpoint, error)
+	// Close method closes the tunnel and cleans up all associated resources
+	Close() error
+}
+
+// Endpoint represets a publicly accessible URL that tunnels to your machine
+type Endpoint struct {
+	URL    string
+	Secure bool
+}
+
 type tunnel struct {
 	acceptedTOS bool
 	*exec.Cmd
@@ -55,7 +67,7 @@ type tunnel struct {
 }
 
 // NewHTTPTunnel creates a new ngrok http tunnel, ready to open!
-func NewHTTPTunnel(acceptedTOS, verbose bool) tunneler.Interface {
+func NewHTTPTunnel(acceptedTOS, verbose bool) Tunneler {
 	return &tunnel{
 		acceptedTOS: acceptedTOS,
 		verbose:     verbose,
@@ -65,7 +77,7 @@ func NewHTTPTunnel(acceptedTOS, verbose bool) tunneler.Interface {
 // Open starts the ngrok process and waits for a connection. Upon sucess, it
 //  returns botht he secure and insecure endpoints that the ngrok process has
 //  established.
-func (tun *tunnel) Open(port int) ([]tunneler.Endpoint, error) {
+func (tun *tunnel) Open(port int) ([]Endpoint, error) {
 	existingTunnelSyncer.Lock()
 	defer existingTunnelSyncer.Unlock()
 	if existingTunnel {
@@ -117,7 +129,7 @@ func (tun *tunnel) Open(port int) ([]tunneler.Endpoint, error) {
 	timeoutChan := time.After(connectionTimeout)
 
 	// wait for something to happen...
-	var endpoints []tunneler.Endpoint
+	var endpoints []Endpoint
 	select {
 	case info := <-waitForConnectionChan:
 		if info.err != nil {
@@ -199,7 +211,7 @@ func errorReciever(cmd *exec.Cmd, stdoutPipe io.ReadCloser, errorChan chan error
 }
 
 type connectionInfo struct {
-	endpoints []tunneler.Endpoint
+	endpoints []Endpoint
 	err       error
 }
 
@@ -254,7 +266,7 @@ func connectionWaiter(waitForConnectionChan chan connectionInfo, verbose bool) {
 			info := connectionInfo{}
 			for _, tun := range res.Tunnels {
 				isSecure := (tun.Protocall == "https")
-				ep := tunneler.Endpoint{
+				ep := Endpoint{
 					URL:    tun.URL,
 					Secure: isSecure,
 				}

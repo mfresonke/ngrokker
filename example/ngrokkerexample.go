@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/mfresonke/ngrokker"
-	"github.com/mfresonke/ngrokker/tunneler"
 )
 
 func main() {
@@ -25,7 +24,7 @@ func main() {
 	}()
 
 	// find the secure endpoint out of the two ngrok creates by default
-	var secureEndpoint tunneler.Endpoint
+	var secureEndpoint ngrokker.Endpoint
 	for i, endpoint := range endpoints {
 		fmt.Println("Endpoint", i+1, "-", endpoint.URL)
 		if endpoint.Secure {
@@ -36,7 +35,7 @@ func main() {
 	// Make a zero-configuration https request to your own machine!
 	// Notice the lack of ":8080"!
 	reqURL := secureEndpoint.URL + "/hello-world"
-	fmt.Println("Making request from outside world to ", reqURL)
+	fmt.Println("Making request from outside world to", reqURL)
 	resp, _ := http.Get(reqURL)
 	defer resp.Body.Close()
 	bodyBytes, _ := ioutil.ReadAll(resp.Body)

@@ -1,4 +1,6 @@
 # ngrokker
+[![GoDoc](https://godoc.org/github.com/mfresonke/ngrokker?status.svg)](https://godoc.org/github.com/mfresonke/ngrokker)
+
 `ngrokker` wraps the `ngrok` shell command, allowing you to programmatically create an introspective tunnel. For more information about ngrok, see https://ngrok.com.
 ## Prerequisites
 You must have `ngrok` installed and available on your `$PATH`. See https://ngrok.com/download.
@@ -18,7 +20,6 @@ import (
 	"net/http"
 
 	"github.com/mfresonke/ngrokker"
-	"github.com/mfresonke/ngrokker/tunneler"
 )
 
 func main() {
@@ -37,7 +38,7 @@ func main() {
 	}()
 
 	// find the secure endpoint out of the two ngrok creates by default
-	var secureEndpoint tunneler.Endpoint
+	var secureEndpoint ngrokker.Endpoint
 	for i, endpoint := range endpoints {
 		fmt.Println("Endpoint", i+1, "-", endpoint.URL)
 		if endpoint.Secure {
@@ -48,7 +49,7 @@ func main() {
 	// Make a zero-configuration https request to your own machine!
 	// Notice the lack of ":8080"!
 	reqURL := secureEndpoint.URL + "/hello-world"
-	fmt.Println("Making request from outside world to ", reqURL)
+	fmt.Println("Making request from outside world to", reqURL)
 	resp, _ := http.Get(reqURL)
 	defer resp.Body.Close()
 	bodyBytes, _ := ioutil.ReadAll(resp.Body)
@@ -58,9 +59,9 @@ func main() {
 ```
 ### Output
 ```
-Endpoint 1 - http://41e32dbc.ngrok.io
-Endpoint 2 - https://41e32dbc.ngrok.io
-Making request from outside world to  https://41e32dbc.ngrok.io/hello-world
+Endpoint 1 - https://9545bfed.ngrok.io
+Endpoint 2 - http://9545bfed.ngrok.io
+Making request from outside world to https://9545bfed.ngrok.io/hello-world
 Thanks, @inconshreveable!
 ```
 
