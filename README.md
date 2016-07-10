@@ -1,5 +1,7 @@
 # ngrokker
 `ngrokker` wraps the `ngrok` shell command, allowing you to programmatically create an introspective tunnel. For more information about ngrok, see https://ngrok.com.
+## Prerequisites
+You must have `ngrok` installed and available on your `$PATH`. See https://ngrok.com/download.
 ## Installing
 This package is `go get`able.
 ```bash
@@ -53,4 +55,4 @@ func main() {
 ```
 
 ## Notice
-Your users MUST accept the [ngrok terms of service](https://ngrok.com/tos) before using this package.
+All users of ngrok MUST accept the [ngrok terms of service](https://ngrok.com/tos) before opening a tunnel.
