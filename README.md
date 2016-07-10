@@ -65,5 +65,12 @@ Making request from outside world to https://9545bfed.ngrok.io/hello-world
 Thanks, @inconshreveable!
 ```
 
+## Issues
+See https://github.com/mfresonke/ngrokker/issues
+
+## Contributing
+This package is in alpha state. Contributions are welcome and encouraged!
+Please fork the repo, make your changes, and create a PR.
+
 ## Notice
 All users of ngrok MUST accept the [ngrok terms of service](https://ngrok.com/tos) before opening a tunnel.
